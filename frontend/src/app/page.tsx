@@ -17,7 +17,6 @@ const extensionsLookup: Record<string, string[]> = {
 export default function Home() {
   const [files, setFiles] = useState<UploadFile[]>([]);
 
-  console.log("state files", files);
   return (
     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 bg-black">
       <div className="divide-y divide-gray-200 overflow-hidden rounded-l shadow">
@@ -51,7 +50,10 @@ export default function Home() {
       <div className="px-4 py-5 sm:p-6 div divide-y divide-gray-200 overflow-hidden rounded-l shadow">
         <div className="flex justify-between items-center">
           <h2 className="text-xl">Uploaded Files:</h2>
-          <FileClearButton setFiles={setFiles} />
+          <FileClearButton
+            isDisabled={files.length === 0}
+            setFiles={setFiles}
+          />
         </div>
         <UploadTable
           extensions={extensionsLookup}
