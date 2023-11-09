@@ -17,9 +17,6 @@ export default function FileClearButton({
     event.stopPropagation();
     setFiles([]);
   };
-
-  console.log("disabled", isDisabled);
-
   return (
     <button
       type="button"

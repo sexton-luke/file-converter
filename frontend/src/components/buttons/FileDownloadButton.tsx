@@ -1,7 +1,13 @@
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 
-export default function FileDownloadButton() {
-  const handleButtonClick = () => {};
+type FileDownloadButtonProps = {
+  id: string;
+};
+
+export default function FileDownloadButton({ id }: FileDownloadButtonProps) {
+  const handleButtonClick = () => {
+    // TODO: Download file from API and store in downloads folder.
+  };
   return (
     <button
       type="button"

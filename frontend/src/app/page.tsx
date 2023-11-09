@@ -2,7 +2,6 @@
 import { useState } from "react";
 import DropZone from "~/components/DropZone";
 import FileClearButton from "~/components/buttons/FileClearButton";
-import FileUploadButton from "~/components/buttons/FileUploadButton";
 import UploadTable from "~/components/UploadTable";
 import { UploadFile } from "~/types";
 

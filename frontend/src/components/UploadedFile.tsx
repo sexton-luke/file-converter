@@ -1,7 +1,9 @@
+"use client";
 import { UploadFile, UploadFileAction } from "~/types";
 import FileConvertButton from "./buttons/FileConvertButton";
 import FileDownloadButton from "./buttons/FileDownloadButton";
 import SelectElement from "./SelectElement";
+import { useState } from "react";
 
 type UploadedFileProps = {
   extensions: Record<string, string[]>;
@@ -16,11 +18,11 @@ export default function UploadedFile({
   files,
   setFiles,
 }: UploadedFileProps) {
+  const [downloadFileUuid, setDownloadFileUuid] = useState<string>("");
   const { id, name, from, to, status } = file;
   const options = extensions[from];
 
   const handleSelectionChange = (option: string) => {
-    console.log("option", option);
     const updatedFile = { ...file, to: option };
     const updatedFiles = [...files];
     const index = updatedFiles.findIndex((file) => file.id === id);
@@ -28,12 +30,19 @@ export default function UploadedFile({
     setFiles(updatedFiles);
   };
 
-  // TODO: Use id when upodating select input
+  const onConvertClick = () => {
+    console.log("converting file..");
+    /**
+     * TODO: Send file to API to be converted and stored temporaily on the server.
+     * Request returns a uuid to be used to download the file.
+     */
+  };
+
   const action =
     status === UploadFileAction.Convert ? (
-      <FileConvertButton />
+      <FileConvertButton onConvertClick={onConvertClick} />
     ) : (
-      <FileDownloadButton />
+      <FileDownloadButton id={downloadFileUuid} />
     );
   return (
     <tr>

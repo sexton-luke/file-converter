@@ -2,8 +2,6 @@
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { UploadFile } from "~/types";
-import FileUploadButton from "./buttons/FileUploadButton";
-import FileClearButton from "./buttons/FileClearButton";
 import { ArrowDownOnSquareStackIcon } from "@heroicons/react/24/outline";
 
 type DropZoneProps = {

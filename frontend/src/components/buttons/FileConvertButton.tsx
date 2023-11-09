@@ -1,7 +1,13 @@
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 
-export default function FileConvertButton() {
-  const handleButtonClick = () => {};
+type FileConvertButtonProps = {
+  onConvertClick: () => void;
+};
+
+export default function FileConvertButton({
+  onConvertClick,
+}: FileConvertButtonProps) {
+  const handleButtonClick = () => onConvertClick();
   return (
     <button
       type="button"
