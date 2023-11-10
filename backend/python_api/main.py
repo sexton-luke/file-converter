@@ -9,9 +9,9 @@ from typing_extensions import Annotated
 from classes.file_converter import FileConverter
 
 description = """
-Simple app to demonstrate converting files using FastAPI.
+Simple app to demonstrate converting media files using FastAPI.
 """
-app = FastAPI(title="FileConverterApp",
+app = FastAPI(title="MediaConverterAPI",
               description=description,
               version="0.1")
 
