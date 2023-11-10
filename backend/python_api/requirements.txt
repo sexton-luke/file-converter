@@ -1,7 +1,3 @@
-# Minimum Python version
-python>=3.8
-
-# Dependencies
 fastapi
 Pillow
 python-multipart
