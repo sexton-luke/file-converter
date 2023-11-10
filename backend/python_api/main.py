@@ -38,7 +38,7 @@ os.makedirs(temp_dir, exist_ok=True)
 
 @app.post('/convert')
 def convert_file(file: Annotated[UploadFile, Form()], from_format: Annotated[str, Form()], to_format: Annotated[str, Form()]):
-    print('Converting file from', from_format," to", to_format)    
+    print('Converting file from', from_format,"to", to_format)    
     converter = FileConverter()
     supported_formats = converter.get_supported_formats()    
     if (from_format, to_format) not in supported_formats:
@@ -62,6 +62,7 @@ def convert_file(file: Annotated[UploadFile, Form()], from_format: Annotated[str
     # Perform the conversion using the FileConverter class
     (success, media_type) = converter.convert(from_format, to_format, input_path, output_path)
     if success:
+        print(f"Conversion successful.. Returning {output_file} as {media_type}")
         return FileResponse(output_path, media_type=media_type, headers={"Content-Disposition": f"attachment; filename={output_file}"})
     else:
         return JSONResponse(content={"error": "Conversion failed"})
