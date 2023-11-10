@@ -6,7 +6,6 @@ from fastapi.responses import JSONResponse, FileResponse
 from operator import itemgetter
 from uuid import uuid4
 from typing_extensions import Annotated
-
 from classes.file_converter import FileConverter
 
 description = """
@@ -28,6 +27,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["Content-Disposition"]
 )
 
 
@@ -46,10 +46,9 @@ def convert_file(file: Annotated[UploadFile, Form()], from_format: Annotated[str
     
     filename = file.filename.split('.')[0]
     # Generate unique filenames
-    input_uuid = str(uuid4())
-    input_file = f"{input_uuid}_{filename}.{from_format}"
-    output_uuid = str(uuid4())
-    output_file = f"{output_uuid}_{filename}.{to_format}"
+    uuid = str(uuid4())
+    input_file = f"{uuid}_{filename}.{from_format}"
+    output_file = f"{uuid}_{filename}.{to_format}"
     
     # Combine directory and filename
     input_path = os.path.join(temp_dir, input_file)
@@ -67,6 +66,24 @@ def convert_file(file: Annotated[UploadFile, Form()], from_format: Annotated[str
     else:
         return JSONResponse(content={"error": "Conversion failed"})
 
+@app.delete("/delete-temp-files/{id}")
+def delete_temp_files(id: str):
+    try:
+        # Get a list of all files in the directory
+        print(f"Attempting to delete files with the name {id}...")
+        file_list = os.listdir(temp_dir)
+
+        # Filter files that match the provided filename (excluding extension)
+        matching_files = [file for file in file_list if os.path.splitext(file)[0] == id]
+
+        # Delete matching files
+        for file in matching_files:
+            file_path = os.path.join(temp_dir, file)
+            os.remove(file_path)
+
+        return {"message": f"Deleted {len(matching_files)} files with the name {id} (excluding extension)"}
+    except Exception as error:
+        return {"error": f"Error deleting files: {str(error)}"}
 
 @app.get("/")
 def read_root():
