@@ -2,7 +2,7 @@
 
 ## Overview
 
-Fullstack application to upload and convert files from one format to another. Please see below for supported conversions.
+Fullstack application to upload and convert files from one format to another using NextJS (frontend) and FastAPI (python)/Go backend. Please see below for supported conversions.
 
 ### Supported Conversions
 
