@@ -25,6 +25,7 @@ class FileConverter:
 
     def png_to_jpg(self, png_path, jpg_path):
         image = Image.open(png_path)
-        image.save(jpg_path)
+        converted_image = image.convert("RGB") # Remove alpha channel
+        converted_image.save(jpg_path)
         return (True, "image/jpeg")
 
