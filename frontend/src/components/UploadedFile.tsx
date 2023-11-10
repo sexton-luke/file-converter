@@ -1,7 +1,8 @@
+import axios from "axios";
 import { UploadFile } from "~/types";
 import FileConvertButton from "./buttons/FileConvertButton";
 import SelectElement from "./SelectElement";
-import axios from "axios";
+import { convertRoute, deleteTempFilesRoute } from "~/routes";
 
 type UploadedFileProps = {
   extensions: Record<string, string[]>;
@@ -33,21 +34,13 @@ export default function UploadedFile({
       formData.append("file", contents);
       formData.append("from_format", from);
       formData.append("to_format", to);
-      const response = await axios.post(
-        "http://localhost:8000/convert",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          responseType: "blob",
-        }
-      );
-      console.log("response", response);
-
+      const response = await axios.post(convertRoute, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        responseType: "blob",
+      });
       const contentType = response.headers["content-type"];
-      const contentDisposition = response.headers["content-disposition"];
-      console.log("disposition", contentDisposition);
 
       const blob = new Blob([response.data], { type: contentType });
       const url = window.URL.createObjectURL(blob);
@@ -62,10 +55,11 @@ export default function UploadedFile({
       window.URL.revokeObjectURL(url);
 
       // Clear files from server
+      const contentDisposition = response.headers["content-disposition"];
       const filename = contentDisposition.split("=")[1];
       const id = filename.split(".")[0];
       console.log("filename", id);
-      axios.delete(`http://localhost:8000/delete-temp-files/${id}`);
+      axios.delete(`${deleteTempFilesRoute}/${id}`);
     } catch (error) {
       console.error("Error converting file..", error);
     }
