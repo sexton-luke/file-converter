@@ -1,4 +1,4 @@
-# File Converter
+# Media Converter
 
 ## Overview
 
@@ -33,4 +33,9 @@ uvicorn main:app --reload
 # Backend -- Go API
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the Media Converter!
+
+## TODO Tasks
+
+- Update favicon
+- Implement Go backend

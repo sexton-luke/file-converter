@@ -19,11 +19,21 @@ export default function Home() {
     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 bg-black">
       <div className="divide-y divide-gray-200 overflow-hidden rounded-l shadow">
         <div className="px-4 py-5 sm:px-6">
-          <h1 className="text-3xl">File Converter</h1>
+          <h1 className="text-3xl">Media Converter</h1>
+        </div>
+        <div className="px-4 py-5 sm:px-6">
+          <h2 className="text-xl">Supported Conversions:</h2>
+          <ul>
+            <li className="mt-2 list-disc indent-4 list-inside">
+              {"jpg <--> png"}
+            </li>
+            <li className="list-disc indent-4 list-inside">{"mp3 <--> wav"}</li>
+            <li className="list-disc indent-4 list-inside">{"mp4 <--> avi"}</li>
+          </ul>
         </div>
         <div className="px-4 py-5 sm:p-6">
           <h2 className="text-xl">
-            Instructions to convert files from one to another:
+            Instructions to convert media from one format to another:
           </h2>
           <ol className="list-decimal indent-4 list-inside mt-2">
             <li>
@@ -35,11 +45,7 @@ export default function Home() {
             </li>
             <li>
               Click the <span className="font-bold">Convert</span> button to
-              convert the file.
-            </li>
-            <li>
-              Click the <span className="font-bold">Download</span> button once
-              the file has been converted.
+              convert and download the file.
             </li>
           </ol>
         </div>

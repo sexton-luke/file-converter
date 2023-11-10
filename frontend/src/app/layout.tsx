@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "File Converter",
-  description: "Convert files from one format to another",
+  title: "Media Converter",
+  description: "Convert media from one format to another",
 };
 
 export default function RootLayout({
