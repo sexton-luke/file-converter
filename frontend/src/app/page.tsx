@@ -9,7 +9,6 @@ const extensionsLookup: Record<string, string[]> = {
   avi: ["mp4"],
   mp4: ["avi"],
   jpg: ["png"],
-  pdf: ["docx"],
   png: ["jpg"],
 };
 
@@ -44,7 +43,11 @@ export default function Home() {
             </li>
           </ol>
         </div>
-        <DropZone extensions={extensionsLookup} setFiles={setFiles} />
+        <DropZone
+          extensions={extensionsLookup}
+          files={files}
+          setFiles={setFiles}
+        />
       </div>
       <div className="px-4 py-5 sm:p-6 div divide-y divide-gray-200 overflow-hidden rounded-l shadow">
         <div className="flex justify-between items-center">

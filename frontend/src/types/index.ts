@@ -1,12 +1,8 @@
 export type UploadFile = {
   id: string;
   name: string;
+  file: File;
   from: string;
   to: string;
   status: string;
 };
-
-export enum UploadFileAction {
-  Convert = "convert",
-  Download = "download",
-}

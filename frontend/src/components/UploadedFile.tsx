@@ -1,9 +1,7 @@
-"use client";
-import { UploadFile, UploadFileAction } from "~/types";
+import { UploadFile } from "~/types";
 import FileConvertButton from "./buttons/FileConvertButton";
-import FileDownloadButton from "./buttons/FileDownloadButton";
 import SelectElement from "./SelectElement";
-import { useState } from "react";
+import axios from "axios";
 
 type UploadedFileProps = {
   extensions: Record<string, string[]>;
@@ -18,8 +16,7 @@ export default function UploadedFile({
   files,
   setFiles,
 }: UploadedFileProps) {
-  const [downloadFileUuid, setDownloadFileUuid] = useState<string>("");
-  const { id, name, from, to, status } = file;
+  const { id, name, file: contents, from, to } = file;
   const options = extensions[from];
 
   const handleSelectionChange = (option: string) => {
@@ -30,20 +27,50 @@ export default function UploadedFile({
     setFiles(updatedFiles);
   };
 
-  const onConvertClick = () => {
-    console.log("converting file..");
-    /**
-     * TODO: Send file to API to be converted and stored temporaily on the server.
-     * Request returns a uuid to be used to download the file.
-     */
+  const onConvertClick = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("file", contents);
+      formData.append("from_format", from);
+      formData.append("to_format", to);
+      const response = await axios.post(
+        "http://localhost:8000/convert",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          responseType: "blob",
+        }
+      );
+      console.log("response", response);
+
+      const contentType = response.headers["content-type"];
+      const contentDisposition = response.headers["content-disposition"];
+      console.log("disposition", contentDisposition);
+
+      const blob = new Blob([response.data], { type: contentType });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const rawName = name.split(".")[0];
+      a.href = url;
+      a.download = `${rawName}.${to}`;
+      document.body.appendChild(a);
+      a.click();
+      // Clean up the temporary URL and anchor element
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+
+      // Clear files from server
+      const filename = contentDisposition.split("=")[1];
+      const id = filename.split(".")[0];
+      console.log("filename", id);
+      axios.delete(`http://localhost:8000/delete-temp-files/${id}`);
+    } catch (error) {
+      console.error("Error converting file..", error);
+    }
   };
 
-  const action =
-    status === UploadFileAction.Convert ? (
-      <FileConvertButton onConvertClick={onConvertClick} />
-    ) : (
-      <FileDownloadButton id={downloadFileUuid} />
-    );
   return (
     <tr>
       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
@@ -57,7 +84,7 @@ export default function UploadedFile({
         />
       </td>
       <td className="whitespace-nowrap px-3 py-4 text-sm text-white">
-        {action}
+        <FileConvertButton onConvertClick={onConvertClick} />
       </td>
     </tr>
   );

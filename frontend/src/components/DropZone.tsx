@@ -5,30 +5,34 @@ import { UploadFile } from "~/types";
 import { ArrowDownOnSquareStackIcon } from "@heroicons/react/24/outline";
 
 type DropZoneProps = {
+  files: UploadFile[];
   setFiles: (array: UploadFile[]) => void;
   extensions: Record<string, string[]>;
 };
 
-export default function DropZone({ setFiles, extensions }: DropZoneProps) {
+export default function DropZone({
+  files,
+  setFiles,
+  extensions,
+}: DropZoneProps) {
   const onDrop = useCallback(
-    (files: File[]) => {
-      console.log("DropZone Files:", files);
-
-      const selectedFiles: UploadFile[] = files.map(({ name }, index) => {
-        const from = name?.split(".")?.pop() ?? "";
+    (droppedFiles: File[]) => {
+      const selectedFiles: UploadFile[] = droppedFiles.map((file, index) => {
+        const from = file.name?.split(".")?.pop() ?? "";
         const to = from ? extensions[from][0] : "";
 
         return {
-          id: `${name}-${index}`,
-          name,
+          id: `${file.name}-${index}`,
+          file,
+          name: file.name,
           from,
           to,
           status: "...",
         };
       });
-      setFiles(selectedFiles);
+      setFiles([...files, ...selectedFiles]);
     },
-    [extensions, setFiles]
+    [extensions, files, setFiles]
   );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
