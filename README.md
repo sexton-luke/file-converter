@@ -17,13 +17,16 @@ First, ensure all dependencies are installed:
 ```bash
 # Frontend
 cd frontend
+
 # Subsitute pnpm with your package manager (npm, yarn, bun)
 pnpm install && pnpm run dev
 
 # Backend -- Python API
 cd backend && cd python_api
+
 # Install python dependencies
 pip install -r requirements.txt
+
 # Start server - Defaults to port 8000
 uvicorn main:app --reload
 
