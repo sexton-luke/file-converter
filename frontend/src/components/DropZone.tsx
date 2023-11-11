@@ -16,8 +16,8 @@ export default function DropZone({
   extensions,
 }: DropZoneProps) {
   const onDrop = useCallback(
-    (droppedFiles: File[]) => {
-      const selectedFiles: UploadFile[] = droppedFiles.map((file, index) => {
+    (acceptedFiles: File[]) => {
+      const selectedFiles: UploadFile[] = acceptedFiles.map((file, index) => {
         const from = file.name?.split(".")?.pop() ?? "";
         const to = from ? extensions[from][0] : "";
 
@@ -34,7 +34,17 @@ export default function DropZone({
     },
     [extensions, files, setFiles]
   );
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      "image/jpeg": [".jpg", ".jpeg", ".JPG", ".JPEG"],
+      "image/png": [".png", ".PNG"],
+      "audio/mpeg": [".mp3", ".MP3"],
+      "audio/wav": [".wav", ".WAV"],
+      "video/avi": [".avi", ".AVI"],
+      "video/mp4": [".mp4", ".MP4"],
+    },
+  });
 
   return (
     <div className="px-3.5 py-4" {...getRootProps()}>
