@@ -4,5 +4,4 @@ export type UploadFile = {
   file: File;
   from: string;
   to: string;
-  status: string;
 };

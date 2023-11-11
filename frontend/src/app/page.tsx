@@ -7,9 +7,11 @@ import { UploadFile } from "~/types";
 
 const extensionsLookup: Record<string, string[]> = {
   avi: ["mp4"],
-  mp4: ["avi"],
   jpg: ["png"],
+  mp3: ["wav"],
+  mp4: ["avi"],
   png: ["jpg"],
+  wav: ["mp3"],
 };
 
 export default function Home() {
