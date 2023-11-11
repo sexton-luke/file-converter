@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse, FileResponse
 from operator import itemgetter
 from uuid import uuid4
 from typing_extensions import Annotated
-from classes.file_converter import FileConverter
+from classes.media_converter import MediaConverter
 
 description = """
 Simple app to demonstrate converting media files using FastAPI.
@@ -39,7 +39,7 @@ os.makedirs(temp_dir, exist_ok=True)
 @app.post('/convert')
 def convert_file(file: Annotated[UploadFile, Form()], from_format: Annotated[str, Form()], to_format: Annotated[str, Form()]):
     print('Converting file from', from_format,"to", to_format)    
-    converter = FileConverter()
+    converter = MediaConverter()
     supported_formats = converter.get_supported_formats()    
     if (from_format, to_format) not in supported_formats:
         return JSONResponse(content={"error": "Conversion not supported"})
