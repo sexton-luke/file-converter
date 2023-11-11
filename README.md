@@ -12,29 +12,59 @@ Fullstack application to upload and convert files from one format to another usi
 
 ## Getting Started
 
-First, ensure all dependencies are installed:
+### Frontend
 
 ```bash
-# Frontend
 cd frontend
+```
 
+#### Environment Variables:
+
+- Add `.env.local` file at the root of the `frontend` directory.
+- Copy contents from `.env-template` into `.env.local` file.
+
+```bash
 # Subsitute pnpm with your package manager (npm, yarn, bun)
 pnpm install && pnpm run dev
+```
 
-# Backend -- Python API
-cd backend && cd python_api
+### Backend
+
+```bash
+cd backend
+```
+
+#### Python API
+
+##### Important! - ffmpeg
+
+- When converting `avi/mp3/mp4/wav`, the backend server requires **[ffmpeg](https://github.com/jiaaro/pydub#getting-ffmpeg-set-up)** to be installed for python **[pydub](https://pydub.com/)** package to convert properly.
+
+```bash
+# MacOS (homebrew)
+brew install ffmpeg
+
+# Linux
+apt-get install ffmpeg libavcodec-extra
+
+# Windows (choco)
+choco install ffmpeg
+```
+
+```bash
+cd python_api
 
 # Install python dependencies
 pip install -r requirements.txt
 
 # Start server - Defaults to port 8000
 uvicorn main:app --reload
+```
 
-# Backend -- Go API
+#### Go API
+
+```bash
+cd go_api
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the Media Converter!
-
-## TODO Tasks
-
-- Implement Go backend
