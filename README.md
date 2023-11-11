@@ -38,7 +38,7 @@ cd backend
 
 #### Important! - ffmpeg
 
-- When converting `avi/mp3/mp4/wav`, the backend server requires **[ffmpeg](https://github.com/jiaaro/pydub#getting-ffmpeg-set-up)** to be installed for python **[pydub](https://pydub.com/)** package to convert properly.
+- When converting `avi/mp3/mp4/wav`, the backend server requires **[ffmpeg](https://github.com/jiaaro/pydub#getting-ffmpeg-set-up)** to be installed for python **[pydub](https://pydub.com/)** and **[moviepy](https://zulko.github.io/moviepy/)** packages to work properly.
 
 ```bash
 # MacOS (homebrew)
