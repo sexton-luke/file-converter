@@ -52,19 +52,11 @@ choco install ffmpeg
 ```
 
 ```bash
-cd python_api
-
 # Install python dependencies
 pip install -r requirements.txt
 
 # Start server - Defaults to port 8000
 uvicorn main:app --reload
-```
-
-#### Go API
-
-```bash
-cd go_api
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the Media Converter!
