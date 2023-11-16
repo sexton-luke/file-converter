@@ -1,6 +1,6 @@
 fastapi
 Pillow
 pydub
-pymovie
+moviepy
 python-multipart
 uvicorn
